@@ -139,7 +139,7 @@ class bitpay {
       'currency' => $order->info['currency'],
       'buyerName' => $order->customer['firstname'].' '.$order->customer['lastname'],      
       'fullNotifications' => 'true',
-      'notificationURL' => zen_href_link('bitpay_callback.php', $parameters='', $connection='NONSSL', $add_session_id=true, $search_engine_safe=true, $static=true ),
+      'notificationURL' => zen_href_link('blockpay_callback.php', $parameters='', $connection='NONSSL', $add_session_id=true, $search_engine_safe=true, $static=true ),
       'redirectURL' => zen_href_link('account'),
       'transactionSpeed' => MODULE_PAYMENT_BITPAY_TRANSACTION_SPEED,
       'apiKey' => MODULE_PAYMENT_BITPAY_APIKEY,
@@ -178,13 +178,13 @@ class bitpay {
     global $db, $messageStack;
 
     if (defined('MODULE_PAYMENT_BITPAY_STATUS')) {
-      $messageStack->add_session('Bit-pay module already installed.', 'error');
+      $messageStack->add_session('BlockPay module already installed.', 'error');
       zen_redirect(zen_href_link(FILENAME_MODULES, 'set=payment&module=bitpay', 'NONSSL'));
       return 'failed';
     }
 
     $db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) "
-    ."values ('Enable Bit-pay Module', 'MODULE_PAYMENT_BITPAY_STATUS', 'True', 'Do you want to accept bitcoin payments via bit-pay.com?', '6', '0', 'zen_cfg_select_option(array(\'True\', \'False\'), ', now());");
+    ."values ('Enable BlockPay Module', 'MODULE_PAYMENT_BITPAY_STATUS', 'True', 'Do you want to accept bitcoin payments via bit-pay.com?', '6', '0', 'zen_cfg_select_option(array(\'True\', \'False\'), ', now());");
 
     $db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) "
     ."values ('API Key', 'MODULE_PAYMENT_BITPAY_APIKEY', '', 'Enter you API Key which you generated at bitpay.com', '6', '0', now());");

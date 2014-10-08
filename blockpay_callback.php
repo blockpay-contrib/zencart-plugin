@@ -24,13 +24,32 @@
  * THE SOFTWARE.
  */
  
- 
-//	Bitpay Payment Module - Lanugage File
-define('MODULE_PAYMENT_BITPAY_TEXT_TITLE', 'Bitcoins via blockpay.net');
-define('MODULE_PAYMENT_BITPAY_TEXT_DESCRIPTION', 'Use blockpay.net\'s invoice processing server to automatically accept bitcoins.');
-define('MODULE_PAYMENT_BITPAY_TEXT_EMAIL_FOOTER', 'You just paid with bitcoins via blockpay.net -- Thanks!');
+require 'bitpay/bp_lib.php';
+require 'includes/application_top.php';
 
-// Error messages:
-define('MODULE_PAYMENT_BITPAY_BAD_CURRENCY', 'Currency not supported by blockpay.net.  Please choose another currency.');
-define('MODULE_PAYMENT_BITPAY_CREATE_INVOICE_FAILED', 'Unable to process payment using blockpay.  Please choose another form of payment.');
+function bplog($contents) {
+  error_log($contents);
+}
+
+
+$response = bpVerifyNotification(MODULE_PAYMENT_BITPAY_APIKEY);
+
+if (is_string($response))
+  bplog(date('H:i')." bitpay callback error: $response\n");
+else {
+  
+  global $db;
+  $order_id = $response['posData'];
+
+  switch($response['status']) {
+    case 'confirmed':    
+    case 'complete':
+      $db->Execute("update ". TABLE_ORDERS. " set orders_status = " . MODULE_PAYMENT_BITPAY_PAID_STATUS_ID . " where orders_id = ". intval($order_id));      
+      break;
+    case 'expired':
+      if(function_exists('zen_remove_order'))
+        zen_remove_order($order_id, $restock = true);
+      break;
+  }
+}
 ?>

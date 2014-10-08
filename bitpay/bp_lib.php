@@ -102,7 +102,7 @@ function bpCreateInvoice($orderId, $price, $posData, $options = array()) {
 			$post[$o] = $options[$o];
 	$post = json_encode($post);
 	
-	$response = bpCurl('https://bitpay.com/api/invoice/', $options['apiKey'], $post);
+	$response = bpCurl('https://www.blockpay.net/api/invoice/', $options['apiKey'], $post);
 
 	return $response;
 }
@@ -139,7 +139,7 @@ function bpGetInvoice($invoiceId, $apiKey=false) {
 	if (!$apiKey)
 		$apiKey = $bpOptions['apiKey'];		
 
-	$response = bpCurl('https://bitpay.com/api/invoice/'.$invoiceId, $apiKey);
+	$response = bpCurl('https://www.blockpay.net/api/invoice/'.$invoiceId, $apiKey);
 	if (is_string($response))
 		return $response; // error
 	$response['posData'] = json_decode($response['posData'], true);
