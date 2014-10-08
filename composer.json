@@ -1,14 +1,14 @@
 {
-    "name": "bitpay/zencart-plugin",
+    "name": "blockpay/zencart-plugin",
     "description": "",
     "type": "zencart-plugin",
     "keywords": [],
-    "homepage": "https://github.com/bitpay/zencart-plugin",
+    "homepage": "https://github.com/blockpay/zencart-plugin",
     "license": "MIT",
     "support": {
-        "email": "support@bitpay.com",
-        "issues": "https://github.com/bitpay/zencart-plugin/issues",
-        "source": "https://github.com/bitpay/zencart-plugin"
+        "email": "support@blockpay.com",
+        "issues": "https://github.com/blockpay/zencart-plugin/issues",
+        "source": "https://github.com/blockpay/zencart-plugin"
     },
     "minimum-stability": "stable",
     "require": {},
